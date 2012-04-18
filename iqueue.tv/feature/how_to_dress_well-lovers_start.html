@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="reset.css">
+<link rel="stylesheet" type="text/css" href="index.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"></script>
+<script src="http://a.vimeocdn.com/js/froogaloop2.min.js"></script>
+<title>IQueue.tv</title>
+
+<meta property="og:site_name" content="iQueueTV" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Ftr: How To Dress Well" />
+<meta property="og:url" content="http://iqueue.tv/feature/how_to_dress_well-lovers_start.html" />
+<meta property="og:image" content="http://b.vimeocdn.com/ts/815/672/81567237_640.jpg" />
+<meta property="og:video" content="http://vimeo.com/moogaloop.swf?clip_id=12988946" />
+<meta property="og:video:type" content="application/x-shockwave-flash" />
+<meta property="og:video:width" content="640" />
+<meta property="og:video:height" content="408" />
+<meta property="og:description" content="How To Dress Well - Lover's Start / Tri-Angle Records / Jamie Harley" />
+
+<script type="text/javascript">
+var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-29165301-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s)})();
+</script>
+
+<script type="text/javascript">
+var current_player,get_more_tracks,init_player,next_playlist,play_next,playlist,preload_player,queue_capacity,requestPlaylist,set_title,toggle_play,try_enqueue,when_ready,_append_response_to_playlist,_dequeue,_enqueue,_replace_playlist_with_response,_track_download,_track_playback;playlist=[12988946],next_playlist="default",current_player=function(){var a;return a=$(".vimeo:first-child")[0],a!=null?$f(a):a},queue_capacity=3,when_ready=function(a){var b;return b=current_player(),b!=null?b.addEvent("ready",a):setTimeout(function(){return when_ready(a)},1e3)},try_enqueue=function(){var a,b;a=$(".vimeo").length,b=a<queue_capacity;if(b)return _enqueue()},init_player=function(a){return $f($('<iframe\n  id="'+a+'"\n  class="vimeo loading"\n  src="http://player.vimeo.com/video/'+a+"?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0&amp;api=1&amp;player_id="+a+'"\n  frameborder="0">\n  </iframe>\'')[0])},preload_player=function(a){return a.api("ready",function(){return a.addEvent("play",function(){return a.api("pause"),a.removeEvent("play")}),a.api("play"),a.addEvent("loadProgress",_track_download(a))})},_track_download=function(a){return function(b){if(b.percent>.975)return $f($(".loading")[0]).removeEvent("loadProgress"),$(a.element).removeClass("loading"),try_enqueue()}},_track_playback=function(a){return function(b){if(b.percent>.99)return $(a.element).removeEvent("playProgress"),play_next()}},toggle_play=function(){var a;return a=current_player(),a.addEvent("ready",function(){return a.api("paused",function(b){return b?a.api("play"):a.api("pause")})})},_enqueue=function(){var a,b;return a=playlist.shift(),a!=null?(b=init_player(a),$("#queue").append(b.element),preload_player(b)):get_more_tracks(_enqueue)},_dequeue=function(){return $(".vimeo:first-child").remove()},set_title=function(){var a;return a=$(".vimeo:first-child").attr("id"),document.title="TV",$.getJSON("http://vimeo.com/api/oembed.json?url=http%3A//vimeo.com/"+a,function(a){return document.title=a.title})},play_next=function(){return _dequeue(),try_enqueue(),when_ready(function(){var a;return a=current_player(),set_title(),a.api("play"),a.addEvent("playProgress",_track_playback(a)),a.addEvent("finish",play_next)})},requestPlaylist=function(a,b){var c,d;return d="/playlists/"+a,c=function(a){return b(a)},$.getJSON(d,"",c)},_append_response_to_playlist=function(a){return playlist=playlist.concat(a.playlist),next_playlist=a.next},_replace_playlist_with_response=function(a){return playlist=a.playlist,next_playlist=a.next},get_more_tracks=function(a){return requestPlaylist(next_playlist,function(b){return _append_response_to_playlist(b),a()})},$(document).keydown(function(a){switch(a.keyCode){case 13:return play_next();case 32:return toggle_play();default:return!1}}),$.ajaxSetup({error:function(a,b,c){return alert(b+": "+c+": "+a.responseText)}}),$(document).ready(function(){var a;return a=function(){return $("#overlay").animate({opacity:0},300)},play_next(),setTimeout(a,3e3)});
+</script>
+
+</head>
+<body>
+<div class="screen" id="overlay"><img src="/keys.png" /></div>
+<div class="screen" id="queue"></div>
+</body>
+</html>

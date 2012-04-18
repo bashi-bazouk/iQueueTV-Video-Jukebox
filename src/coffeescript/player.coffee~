@@ -1,0 +1,209 @@
+playlist=___playlist
+next_playlist=___next_playlist
+queue_capacity = 3
+
+###
+UTILITIES
+###
+
+current_player = () ->
+  element = $(".vimeo:first-child")[0]
+  if element?
+    $f element
+  else
+    element
+
+when_ready = (f) ->
+  player = current_player()
+  if player?
+    player.addEvent 'ready', f
+  else
+    setTimeout (() -> (when_ready f)), 1000
+
+try_enqueue = () ->
+  return if $(".loading").length > 0
+  buffered = $(".vimeo").length
+  needMore = buffered < queue_capacity
+  _enqueue() if needMore
+
+with_duration = (player, callback) ->
+  player.api 'getDuration', callback
+
+###
+Player Type
+###
+
+init_player = (playerID) ->
+  $f $("""
+       <iframe
+         id="#{playerID}"
+         class="vimeo loading"
+         src="http://player.vimeo.com/video/#{playerID}?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=0&amp;api=1&amp;player_id=#{playerID}"
+         frameborder="0">
+         </iframe>'
+      """)[0]
+
+preload_player = (player) ->
+  player.api 'ready', () ->
+    player.addEvent 'play', () ->
+      player.api 'pause'
+      player.removeEvent 'play'
+    player.api 'play'
+
+_track_download = (player) -> (data) ->
+  step_title()
+  if data.percent > 0.9 and ($ player.element).hasClass "loading"
+    player.removeEvent "loadProgress"
+    ($ player.element).removeClass "loading"
+    try_enqueue()
+
+_track_playback = (player, duration) -> (data) ->
+    if data.seconds > (duration-10) and not ($ player.element).hasClass "ending"
+      ($ player.element).addClass "ending"
+      flash_footer()
+    if data.percent > 0.99
+      player.removeEvent 'playProgress'
+      play_next()
+
+toggle_play = () ->
+  player = current_player()
+  player.addEvent 'ready', () ->
+    player.api 'paused', (e) ->
+      if e
+        player.api 'play'
+      else
+        player.api 'pause'
+
+###
+Player Stack
+###
+
+_enqueue = () ->
+  nextTrack = playlist.shift()
+  if nextTrack?
+    player = (init_player nextTrack)
+    $('#queue').append player.element
+    preload_player player
+  else
+    get_more_tracks _enqueue
+
+_dequeue = () ->
+  $(".vimeo:first-child").remove()
+
+_clear_queue = *() ->
+  $(".vimeo").remove()
+
+play_next = () ->
+  _dequeue()
+  try_enqueue()
+  when_ready () ->
+    get_info (data) ->
+      set_info data
+      flash_footer()
+    player = current_player()
+    player.api 'play'
+    with_duration player, (duration) ->
+      player.addEvent 'playProgress', (_track_playback player, duration)
+    player.addEvent 'loadProgress', (_track_download player)
+    player.addEvent 'finish', play_next
+
+###
+Playlist Type
+###
+
+requestPlaylist = (name, callback) ->
+  url = "http://iqueue.tv/playlist/"+name+"/s"
+  success = (data) -> callback data
+  $.getJSON url, '', success
+
+_append_response_to_playlist = (data) ->
+  playlist = playlist.concat data.playlist
+  next_playlist = data.next
+
+_replace_playlist_with_response = (data) ->
+  playlist = data.playlist
+  next_playlist = data.next
+
+get_more_tracks = (callback) ->
+  requestPlaylist next_playlist, (data) ->
+    _append_response_to_playlist data
+    callback()
+      
+###
+Initialization
+###
+
+$(document).keydown (data) ->
+  switch data.keyCode
+    when 13 then play_next()
+    when 32 then toggle_play()
+    else false
+    
+$.ajaxSetup({"error": (XMLHttpRequest,textStatus,errorThrown) ->
+   return 0;
+  });
+
+###
+Banners
+###
+
+set_title = (str) ->
+  document.title = str
+
+step_title = () ->
+  len = ($('title').html().length + 1) % 4
+  $('title').html(Array(len).join('.'))
+
+
+###
+Information
+###
+
+get_set_by_id = (id) -> (val) ->
+  if val?
+    $("#"+id).text(val)
+  else	
+    $("#"+id).text()
+
+title = get_set_by_id "title"
+artist = get_set_by_id "artist"
+label = get_set_by_id "label"
+director = get_set_by_id "director"
+
+show_info = () -> $("#info").animate({ opacity: 1 }, 300)
+hide_info = () ->  $("#info").animate({ opacity: 0 }, 300)
+
+show_logo = () -> $("#logo").animate({ opacity: 1 }, 300)
+hide_logo = () -> $("#logo").animate({ opacity: 0 }, 300)
+
+set_info = (data) ->
+  artist(data.artist)
+  title(data.title)
+  label(data.label)
+  director(data.director)
+
+get_info = (callback) ->
+  id = $(".vimeo:first-child").attr "id"
+  url="/video/"+id
+  $.getJSON url, '', callback
+
+missing_information = () ->
+  not_available = "N/A"
+  title() is not_available or artist() is not_available or (label() is not_available and director() is not_available)
+
+flash_footer = () ->
+  if missing_information()
+    show_logo(); setTimeout hide_logo, 5000
+  else
+    show_info(); setTimeout hide_info, 5000
+    show_logo(); setTimeout hide_logo, 5000
+    
+###
+Main
+###
+      
+$(document).ready () ->
+  drop_banner = () ->
+    $("#overlay").animate { "opacity": 0 }, 300
+  play_next()
+  setTimeout drop_banner, 3000

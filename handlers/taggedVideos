@@ -1,0 +1,33 @@
+#!/usr/local/bin/python
+
+from mongrel2 import handler
+from simplejson import (dumps,loads)
+from pymongo import Connection
+from random import shuffle
+
+reqAddr= "tcp://127.0.0.1:8896"
+resAddr= "tcp://127.0.0.1:8897"
+sender_id = "taggedVideos"
+connection = handler.Connection(sender_id, reqAddr, resAddr )
+
+videos = Connection().local.videos
+
+okay = {"$ne":"N/A"}
+
+while True:
+  request = connection.recv()
+  print (str(request.headers))
+
+  ids = []
+
+  cursor = videos.find({"artist": okay, "title": okay}, {"vimeoID": 1})
+  for i in range(0,cursor.count()):
+    ids.append (cursor[i]["vimeoID"])
+  cursor.close()  
+
+  shuffle(ids)
+
+  response = dumps ({ "name":"tagged", "next_playlist":"tagged", "playlist":ids })
+  print (response)
+
+  connection.reply_http(request, response)

@@ -1,0 +1,14 @@
+#!/usr/local/bin/python
+
+import sys
+
+uuid = sys.argv[1]
+ids = " ".join(sys.argv[2:-2])
+file = sys.argv[-1]
+
+print uuid
+print ids
+print file
+
+with open(file) as f:
+  print "%s %d:%s,%s " % (uuid, len(ids), ids, f.read())

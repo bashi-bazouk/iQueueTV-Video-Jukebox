@@ -1,0 +1,21 @@
+</script>
+
+<script type="text/javascript">
+
+function flicker(timeOn, width) {
+  setTimeout(function() {$("#overlay > img").show},timeOn);
+  setTimeout($("#overlay > img").hide,timeOn+width)
+}
+
+$(document).ready(function() {
+  setTimeout($("#overlay > img").show,000)
+})
+</script>
+
+</head>
+<body>
+<div class="screen" id="overlay"><img src="/ASCII.png" /></div>
+<div id="info"></div>
+<div class="screen" id="queue"></div>
+</body>
+</html>

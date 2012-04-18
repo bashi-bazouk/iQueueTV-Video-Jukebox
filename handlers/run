@@ -1,0 +1,6 @@
+#!/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/application/bin:/home/dependencies/mongodb/bin
+PYTHONPATH=/home/application/lib:/home/dependencies/PyOpenGraph-0.2/PyOpenGraph
+export PATH PYTHONPATH
+ &
+echo $! > /home/procer/profiles//home/application/handlers/new//home/application/handlers/new.pid

@@ -1,0 +1,99 @@
+#!/usr/local/bin/python
+
+from sys import argv
+from mongrel2 import handler
+from templates import IQTVTemplate
+from pymongo import Connection
+from simplejson import (loads,dumps)
+from PyOpenGraph import PyOpenGraph
+import re
+
+reqAddr='tcp://127.0.0.1:8898'
+resAddr='tcp://127.0.0.1:8899'
+sender_id = "request"
+
+connection = handler.Connection(sender_id, reqAddr, resAddr)
+
+videos = Connection().local.videos
+
+# Construct the template
+with open ("/home/application/src/javascript/player.js") as js:
+  player_script = IQTVTemplate(js.read()).safe_substitute({"next_playlist": '"new"'})
+with open ("/home/application/templates/index.html") as page:
+  template = IQTVTemplate(IQTVTemplate(page.read()).safe_substitute({"playerJS": player_script}))
+
+def search_by_id(identifier):
+  return videos.find_one({ "vimeoID": identifier })
+
+def search_by_artist_title(artist, title):
+  artist = artist.replace('_',' ')
+  title = title.replace('_',' ')
+  return videos.find_one({ "artist": re.compile(artist, re.IGNORECASE), "title": re.compile(title, re.IGNORECASE)})
+
+def get_combinations(segments):
+  combinations = []
+  for i in range(1,len(segments)-1):
+    combinations.append([segments[0:i].join('-'),segments[i:].join('-')])
+  return combinations
+
+def build_response(ogdata,video):
+  context = {"ogdata": ogdata, "playlist": "["+str(video["vimeoID"])+"]"}
+  return template.substitute(context)
+
+def build_og_data(video):
+  source=PyOpenGraph('http://vimeo.com/'+str(video["vimeoID"])).metadata
+
+  def og_tag(name,content):
+    return '<meta property="og:'+name+'" content="'+content+'" />\n'
+
+  # Construct a new description from our meta-data
+  description = ""
+  if video["director"] !=  "N/A":
+    description = ("directed by "+video["director"])
+    if video["label"] != "N/A":
+      description += " / " + video["label"]
+  elif video["label"] != "N/A":
+    description = video["label"]
+
+  # Construct the url from our meta-data
+  artist = video["artist"].replace(" ","_")
+  title = video["title"].replace(" ","_")
+  url = "http://iqueue.tv/playing/"+artist+"-"+title
+
+  # Overwrite the pertinent key-value pairs
+  source["site_name"] = "iQueueTV"
+  source["title"] = video["artist"]+" - "+video["title"]
+  source["url"] = url
+  source["description"] = description
+
+  tags = ""
+  for key in source:
+    tags += og_tag(key,source[key])
+
+  return tags.encode('ascii', 'ignore')
+
+
+### MAIN ###
+while True:
+  request = connection.recv()
+
+  identifier = request.headers["URI"].split("/")[-1].split("-")
+ 
+  
+  video = None
+  if len(identifier) is 1 and identifier[0].isdigit:
+    video = search_by_id(int(identifier[0]))
+  elif len(identifier) is 2:
+    video = search_by_artist_title(identifier[0],identifier[1])
+  elif len(identifier) > 2: # The artist or title is hyphenated.  Try all possible combinations for a match.
+    combinations = get_combinations(identifier)
+    for c in combinations:
+      video = search_by_artist_title(c[0],c[1])
+      if video is not None:
+        break
+  
+  if video is None:
+    connection.reply_http(request, "VIDEO NOT FOUND")
+    continue
+
+  connection.reply_http(request, build_response(build_og_data(video),video))

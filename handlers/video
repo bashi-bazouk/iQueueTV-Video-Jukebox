@@ -1,0 +1,59 @@
+#!/usr/local/bin/python
+
+from sys import argv
+from mongrel2 import handler
+from uuid import uuid4
+from urlparse import parse_qs
+from simplejson import (dumps,loads)
+from pymongo import Connection
+from templates import IQTVTemplate
+
+reqAddr= "tcp://127.0.0.1:8892"
+resAddr= "tcp://127.0.0.1:8893"
+sender_id = "video"
+connection = handler.Connection(sender_id, reqAddr, resAddr )
+
+default_response = IQTVTemplate('{"director": "N/A", "title": "N/A", "vimeoID": ___id, "label": "N/A", "artist": "N/A"}')
+
+videos = Connection().local.videos
+
+class Video:
+  def __init__(self, vimeo_id=None):
+    if vimeo_id:
+      print vimeo_id
+      self.dict = videos.find_one({ "vimeoID": int(vimeo_id) })
+      print("self.dict is "+str(self.dict))
+    else:
+      self.dict = videos.find_one({ "$or" : [ { "title": "N/A" }, { "artist": "N/A" }, { "director": "N/A" }, { "label": "N/A" }] })
+
+  def get(self,name):
+    return self.dict[name]
+
+  def set(self,name,value):
+    print(str(self.dict))
+    print(self.dict[name])
+    self.dict[name] = value
+
+  def save(self):
+    videos.save(self.dict)
+
+def get_video_data(id):
+  data = Video(id).dict
+  if data is None:
+    data = default_response.substitute({"id":id})
+  else:
+    del (data["_id"])
+    data = loads(dumps(data))
+  return str(dumps(data))
+
+while True:
+  request = connection.recv()
+  method = request.headers["METHOD"]
+
+  id = request.headers["URI"].split("/")[-1]
+
+  response = get_video_data(id)
+
+  print(response)
+
+  connection.reply_http(request, response)

@@ -1,0 +1,18 @@
+#!/usr/local/bin/python
+
+import zmq
+from sys import argv
+
+type = argv[1]
+direction = argv[2]
+address = argv[3]
+
+context = zmq.Context()
+receiver = context.socket (eval ("zmq."+type))
+
+if type == "SUB":
+  subscriber.setsockopt (zmq.SUBSCRIBE, "") 
+
+eval ("receiver."+direction+" ('"+address+"')")
+
+print receiver.recv()

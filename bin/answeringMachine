@@ -1,0 +1,23 @@
+#!/usr/local/bin/python
+
+from sys import argv
+from mongrel2 import handler
+from uuid import uuid4
+
+reqAddr=argv[1]
+resAddr=argv[2]
+file=argv[3]
+sender_id = uuid4().hex
+
+mongrel_conn = handler.Connection( sender_id, reqAddr, resAddr )
+
+while True:
+  req = mongrel_conn.recv()
+
+  print str(req.headers)
+
+  fd = open( file, 'r' )
+  fs = fd.read()
+  fd.close()
+  
+  mongrel_conn.reply_http( req, fs )

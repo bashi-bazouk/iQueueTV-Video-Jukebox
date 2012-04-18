@@ -1,0 +1,207 @@
+@font-face {
+    font-family: "cmitalic";
+    src: url(cmsl9.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "cmtex";
+    src: url(cmr9.ttf) format("truetype");
+}
+
+h1 {
+    font-size: 16pt;
+    padding-right: 1em;
+}
+
+italic {
+    font-family: cmitalic;
+}
+
+/* Structural */
+body {
+    width: 100%;
+    font-family: cmtex;
+}
+
+#header {
+    border-bottom: 1px solid black;
+}
+
+#header:hover {
+    cursor: pointer;
+}
+
+#content {
+    width: 834px;
+    margin: 0px auto;
+}
+
+.panel {
+    width: 834px;
+    display: none;
+}
+
+area {
+    color: black;
+    opacity: 0;
+    cursor: pointer;
+}
+
+area:hover {
+    opacity: 0.075;
+    cursor: pointer;
+}
+
+/* Cover */
+
+#cover {
+    display: block;
+}
+
+#cover img {
+    width: 100%;
+}
+
+/* Overlays */
+
+.overlay {
+    position: absolute;
+    opacity: 0;
+    background-color: black;
+    display: block;
+}
+
+#overlays {
+    position:relative;
+    z-index: 1;
+    display:block;
+}
+
+#work_overlay {
+    left: 255px;
+    top: 0;
+    width: 265px;
+    height: 485px;
+}
+
+#team_overlay {
+    left: 520px;
+    top: 0;
+    right: 0;
+    height: 695px;
+}
+
+#vision_overlay {
+    left: 0;
+    top: 0;
+    width: 255px;
+    height: 485px;
+}
+
+#contact_overlay {
+    left: 0;
+    top: 485px;
+    width: 520px;
+    height: 210px;
+}
+
+/* Work */
+
+#work {
+    position: absolute;
+    font-size: 14pt;
+}
+
+#work h1 {
+    font-size: 24pt;
+}
+
+.project {
+    width: 834px;
+    float: left;
+    clear: both;
+}
+
+#jukebox {
+    float: right;
+    margin: 0 0 10px 10px;
+}
+
+#recommender1 {
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
+#recommender2 {
+    border: 1px solid gray;
+    margin: 10px 0 0 10px;
+    float: right;
+}
+
+#mixtapes {
+    width: 100%;
+}
+
+/* Team */
+
+.partner {
+    float: right;
+    clear: both;
+    width: 100%;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
+    font-size: 12pt;
+}
+
+.signature {
+  float: left;
+  clear: left;
+  margin-bottom: 10px;
+}
+
+.signature > h1 {
+  display: inline;
+}
+
+.signature > .title {
+    font-family: cmitalic;
+    font-size: 16pt;
+}
+
+.partner > .portrait {
+    float: right;
+    clear: right;
+    width: 250px
+}
+
+.partner > .bio {
+    float: left;
+    clear: left;
+    width: 570px;
+    line-height: 1.05em;
+}
+
+.partner > .bio > p {
+    margin-bottom: 1em;
+}
+
+/* Vision */
+
+#vision {
+    position: absolute;
+    font-size: 14pt;
+    line-height: 1.05em;
+}
+
+#vision h1 {
+    font-size: 24pt;
+}
+
+/* Contact */
+
+#contact {
+    padding-top: 5px;
+    font-size: 14pt;
+    line-height: 1.2em;
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+while true; do
+read line
+send $1 $2 $3 $line
+done

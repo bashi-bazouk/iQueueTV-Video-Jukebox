@@ -1,0 +1,78 @@
+#!/usr/local/bin/python
+
+from sys import argv
+from mongrel2 import handler
+from uuid import uuid4
+from urlparse import parse_qs
+from simplejson import (dumps,loads)
+from pymongo import Connection
+from templates import IQTVTemplate
+from random import randint
+
+reqAddr= "tcp://127.0.0.1:8894"
+resAddr= "tcp://127.0.0.1:8895"
+sender_id = "adminVideo"
+connection = handler.Connection(sender_id, reqAddr, resAddr )
+
+template = "/home/application/templates/admin_video.html"
+with open(template) as f:
+  template = IQTVTemplate(f.read())
+
+videos = Connection().local.videos
+retired = Connection().local.retired
+
+class Video:
+  def __init__(self, vimeo_id=None):
+    if vimeo_id:
+      self.dict = videos.find_one({ "vimeoID": int(vimeo_id) })
+      if self.dict is None:
+        self.dict = { "vimeoID": int(vimeo_id) }
+    else:
+        self.dict = videos.find({ "$or" : [ { "title": "N/A" }, { "artist": "N/A" }, { "director": "N/A" }, { "label": "N/A" }] }).skip(randint(0,9)).limit(1).next()
+
+  def get(self,name):
+    return self.dict[name]
+
+  def set(self,name,value):
+    self.dict[name] = value
+
+  def save(self):
+    videos.save(self.dict)
+
+
+def POST(request):
+  form = parse_qs(request.body)
+  identifier = int(form["vimeoID"][0])
+  print (identifier)
+  if form["submit"][0] == "Submit":
+    video = Video(identifier)
+    video.set("title", form["title"][0])
+    video.set("artist", form["artist"][0])
+    video.set("director", form["director"][0])
+    video.set("label", form["label"][0])
+    print ("Saving "+str(video.dict))
+    video.save()
+  elif form["submit"][0] == "Retire":
+    target = videos.find_one({ "vimeoID": identifier })
+    print ("Retiring "+str(target))
+    if target is not None:
+      retired.insert(target)
+      videos.remove(target)
+  return GET()
+
+def GET():
+  context = Video().dict
+  del (context["_id"])
+  context = loads(dumps(context))
+  return template.substitute(context)
+
+while True:
+  request = connection.recv()
+  method = request.headers["METHOD"]
+
+  if (method == "POST"):
+    response = POST(request)
+  else:
+    response = GET()
+
+  connection.reply_http(request, response)

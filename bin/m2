@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /home/application
+sudo m2sh load
+nohup m2sh start -name main > /dev/null

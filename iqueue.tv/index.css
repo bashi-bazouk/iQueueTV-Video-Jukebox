@@ -1,0 +1,68 @@
+html {
+    width: 100%
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    max-height: 100%;
+    background: black;
+    overflow: hidden;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#overlay {
+    z-index: 3;
+    background: white
+}
+
+#overlay > img{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 50%;
+    margin-top: -25%;
+}
+
+.vimeo {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    z-index:-1
+}
+
+.vimeo:first-child {
+    z-index: 0;
+}
+
+.footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    font-size: 12pt;
+    min-height: 3em;
+}
+
+#info {
+    float: left;
+    color: white;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    padding: 15px;
+    font-family: sans-serif;
+}
+
+#logo {
+    float: right;
+    opacity: 0;
+}

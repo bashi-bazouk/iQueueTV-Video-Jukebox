@@ -1,0 +1,4 @@
+#!/bin/sh
+
+killall procer
+sudo nohup procer /home/procer/profiles /home/procer/procer.pid > /dev/null &

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+profiles=/home/procer/profiles
+binaries=/home/application/bin
+template=/home/application/templates/procer
+
+handler=$1
+profile=$profiles/$handler
+
+if [ -e $profile ]; then
+  rm -r $profile
+  echo "Killing $handler."
+  killall $handler
+else
+  echo "$handler is not procerized"  
+fi

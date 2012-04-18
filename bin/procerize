@@ -1,0 +1,38 @@
+#!/bin/sh
+
+profiles=/home/procer/profiles
+handlers=/home/application/handlers
+
+name=$1
+script=$handlers/$name
+profile=$profiles/$name
+
+echo $profile
+if [ -e $profile ]; then
+  echo "$name is already procerized"
+else
+  mkdir $profile
+  cd $profile
+  # Make the PID file
+  echo 9999999 > ${name}.pid
+  # Make the PID reference
+  echo $profile/${name}.pid > pid_file
+  # Make the run file
+  echo '#!/bin/sh'   > run
+  echo "PATH=$PATH" >> run
+  echo "PYTHONPATH=$PYTHONPATH" >> run
+  echo "export PATH PYTHONPATH" >> run
+  echo "$script &"  >> run
+  echo 'echo $! >' "$profile/${name}.pid" >> run
+  # Make the restart file
+  cp run restart
+  # Make the depends file
+  echo "List dependencies:"
+  read item
+  while [ "$item" != "" ]; do
+    echo $item >> depends
+    read item
+  done
+fi
+
+chmod -R 777 $profile

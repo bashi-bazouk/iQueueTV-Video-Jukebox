@@ -1,0 +1,429 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="reset.css">
+<link rel="stylesheet" type="text/css" href="about.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"></script>
+<title>iQueueTV: About</title>
+
+<meta property="og:site_name" content="Vimeo" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="iQueueTV: About" />
+<meta property="og:url" content="http://iqueue.tv/about/" />
+<meta property="og:image" content="http://iqueue.tv/logo.png" />
+<meta property="og:description" content="Work / Team / Vision / Contact" />
+
+<script type="text/javascript">
+function clearOverlays(duration, callback) {
+  $(".overlay").css("opacity",0)
+  callback()
+}
+function highlightWork() {
+  clearOverlays(0, function() {
+    $("#work_overlay").fadeTo(100,0.2)
+  });
+}
+function highlightTeam() {
+  clearOverlays(0, function() {
+    $("#team_overlay").fadeTo(100,0.2)
+  });
+}
+function highlightVision() {
+  clearOverlays(0, function() {
+    $("#vision_overlay").fadeTo(100,0.2)
+  });
+}
+function highlightContact() {
+  clearOverlays(0, function() {
+    $("#contact_overlay").fadeTo(100,0.2)
+  });
+}
+
+function showWork() {
+  $(".panel").hide();
+  $("#work").show()
+}
+function showTeam() {
+  $(".panel").hide() 
+  $("#team").show()
+}
+function showVision() {
+  $(".panel").hide()
+  $("#vision").show()
+}
+function showContact() {
+  $(".panel").hide()
+  $("#contact").show()
+}
+</script>
+
+<script type="text/coffeescript">
+
+</script>
+
+</head>
+
+<body>
+<div id="content">
+<div>
+<img id="header" src="images/header.png" usemap="#_header" border="0" width="834" height="61" alt="" />
+<map name="_header" id="_header">
+<area shape="rect" coords="0,0,180,56" onmouseover="highlightWork()" onmouseout="clearOverlays(00)" onclick="showWork()" alt="Work" title="Work" />
+<area shape="rect" coords="179,0,365,56" onmouseover="highlightTeam()" onmouseout="clearOverlays(00)" onclick="showTeam()" alt="Team" title="Team" />
+<area shape="rect" coords="364,0,568,56" onmouseover="highlightVision()" onmouseout="clearOverlays(00)"  onclick="showVision()" alt="Vision" title="Vision" />
+<area shape="rect" coords="568,0,829,56" onmouseover="highlightContact()" onmouseout="clearOverlays(00)"  onclick="showContact()" alt="Contact" title="Contact" />
+</map>
+</div>
+  <div class="panel" id="overlays">
+    <div class="overlay" id="work_overlay" ></div>
+    <div class="overlay" id="team_overlay"></div>
+    <div class="overlay" id="vision_overlay"></div>
+    <div class="overlay" id="contact_overlay"></div>
+  </div>
+  <div class="panel" id="cover">
+    <img src="images/Website.png" />
+  </div>
+  <div class="panel" id="work">
+    <div class="project">
+    <h1>iQueue Video Jukebox</h1>
+      <img id="jukebox" src="images/jukebox.png" />
+      <p>The iQueue Video Jukebox is the most basic element and
+      building block of the iQueueTV platform.  In it's current state
+      of development, the Jukebox takes advantage of existing
+      data-warehousing technology to stream music videos for
+      uninterrupted, hands-free playback.</p>
+
+      <p>As the Jukebox is subject to continuous improvement, future
+      developments include Youtube integration, video recommendations,
+      and improved playback and multiplexing.  Plans are also underway
+      to deploy a proprietary video hosting solution.</p>
+
+      <p>The Jukebox is served by a cloud-playlist system, responsible
+      for the automatic procurement and managed organization of music
+      videos directly from web logs and recommendation engines.  The
+      Jukebox currently serves over 700 videos.</p>
+    </div>
+    <div class="project">
+    <h1>iQueue On Demand</h1>
+      <img id="recommender1" src="images/recommender1.png" />
+      <p>iQueue On Demand reworks the classic call-in voting system of
+      Much On Demand and The Box within the browser to provide
+      a semi-interactive video experience to the user, and an up-to-the-minute
+      analytic and measurement system for analysts and brand
+      managers.</p>
+
+      <p>More importantly, iQueue On Demand serves as a training and
+      testing-ground for future developments in recommendations
+      systems and analytic tools.  Better recommender systems
+      utilize the growing database of user input to develop complex
+      heuristics and decision patterns.  </p>
+      <img id="recommender2" src="images/recommender2.png" />
+
+      <p>As our system grows and our database develops, iQueueTV
+      consultants develop an ever-improving analysis of our audience
+      likes and dislikes, taste, and culture.  This objective picture
+      provides fundamental insights and advantages in the production
+      of new video and targeted advertising, leading to better market
+      penetration and higher return on investment.</p>
+
+      <p>The iQueue On Demand system is currently under development by
+      Josh Meyer and Max Garvey, and is set to release in the late Summer
+      of 2012.</p>
+    </div>
+    <div class="project">
+    <h1>iQueue Mixtapes</h1>
+      <p>iQueueTV leans toward the automatic in user experience.
+      Products like the Jukebox and iQueue On Demand are designed with
+      Set-It-And-Forget-It functionality, so users feel free to mingle
+      their activities and find more time for the things they want and
+      have to do.  iQueueTV in the background is considerably less
+      intrusive than it's more configurable counterparts.</p>
+
+      <p>Thinking along these lines, however, we've realized that there
+      is a whole spectrum of applications that can trade automation
+      for configurability.  We wondered how many clicks it takes to
+      configure these applications.  We see that iQueue On Demand
+      optimizes for automation while providing more configurability
+      than the iQueue Video Jukebox.  How do other media applications
+      fit into this pattern?  </p>
+
+      <p>What we eventually realized is the startling complexity of
+      modern playlist editors.  Youtube's playlist editor is
+      cumbersome, and Vevo's offers little improvement and a dated
+      interface.  Vimeo does not even offer a playlist editor, and
+      their search algorithms are hopelessly inefficient.</p>
+
+      <p>iQueue Mixtapes is the iQueueTV configurable playlist
+      editor.  The project underway is to provide a fluid interface
+      for making, saving, playing, sharing, and remaking video
+      playlists.  iQueue Mixtapes will offer advanced search and
+      indexing of music videos, so you can find exactly what you want
+      with minimal research.  iQueue's web-application framework will
+      provide advanced controls, letting you remix playlists
+      interactively.  Finally, user profiles let you save your mixes
+      for parties, promotional events, or just for hanging around.</p>
+      <img id="mixtapes" src="images/mixtapes.png" />
+    </div>
+  </div>
+  <div class="panel" id="team">
+  <div class="partner">
+    <div class="signature"><h1>Tom Ellingham</h1><span class="title">Business
+    Intelligence</span></div>
+    <img class="portrait" src="images/tom.jpg" /><br/>
+    <div class="bio">
+      <p>With a keen eye for design and a penchant for organization,
+      Tom believes that neither form nor function should take
+      precedence but they should come together to create a great user
+      experience. His educational background spans everything from
+      economics to computer programming to apparel design. And with a
+      music interest that spans many genres he understands the utility
+      in iQueue.TV as an easy to use, great looking music video
+      service.</p>
+ 
+      <p>Never satisfied to sit idle, Tom is always taking on new endeavors
+      to learn something new. Some of his latest projects include
+      designing and programming a video game console and developing a
+      biofeedback interface for use with a cheap EEG reader. He is a
+      fanatic about pop-art and comic books. The late James Rizzi and
+      Batman are his favorites.</p>
+ 
+      <p>Tom holds an A.S. in Business Management, a B.S. in Textile
+      and Apparel Business Management, and a M.S. in Fiber Science and
+      Apparel Design. When not studying he enjoys fishing, sailing, and
+      tinkering with electronics. As head of Business Intelligence for
+      iQueue.TV he plans to use his education and experience in
+      management to support the team while providing a fun and
+      challenging work environment.</p>
+    </div>
+  </div>
+  <div class="partner">
+    <div class="signature"><h1>Kendra Chatburn</h1><span class="title">Project Manager</span></div>
+    <img class="portrait" src="images/kendra.jpg" />
+    <div class="bio">
+      <p>A quirky dynamo, Kendra is the female Jack-of-all trades. Entering public school in 6th grade after being a home-schooled, Kendra is a creative problem solver and activity enthusiast. Be it improv, arts-n-crafts or stilt walking, she is always looking to master something new. Dividing her time between a job, AP classes, sports and clubs in high school, she went on to earn her BS in Urban and Regional Studies with minors in Architecture, Environmental Studies and Spanish at Cornell University.</p>
+
+<p>In the past 6 years, Kendra's been to Canada, Spain, Portugal, France, Australia, New Zealand, Fiji, Honduras, Nicaragua and Costa Rica. She has also traveled quite a bit domestically, spending time in New York City, New Orleans, Chicago, and various other cities on each coast.</p>
+
+<p>Kendra served as a Municipal Development Volunteer with Peace Corps in Honduras. She knows what it takes to transform a good idea into a success. Her cross-cultural interactions and world travel experiences have shaped the way she understands culture and identity. With a strong appreciation for design, art, music and visual media, she believes in iQueue.TV's tremendous capacity to connect and shape post-modern culture.</p>
+    </div>
+  </div>
+  <div class="partner">
+    <div class="signature"><h1>Max Garvey</h1><span class="title">Python Programmer</span></div>
+    <img class="portrait" src="images/max.jpg" />
+    <div class="bio">
+      <p>As a linux wizard, Max knows black magic. Every project has
+      certain underlying flows and structures, his role is developing
+      this kind of infrastructure for iQueue.tv. As a Portland native,
+      raised amidst the thriving art scene during the digital boom of
+      the nineties, Max has worn many hats: musician, student,
+      developer.</p>
+      
+      <p>At Lincoln High School, Max was involved in student government,
+      school band, and athletics. His deep passion for music fostered
+      great attention to detail and a belief in the power of
+      communication and collaboation. He joined iQueue.tv in 2011
+      because of an early reverence for MTV, remembering waiting
+      through innumerable commercials for their little burst of
+      content. Why not make something a little better?</p>
+      
+      <p>An avid rider of bicycles, wearer of leather, and player of
+      keyboards, Max loves having fun. He likes to program using free
+      software, and finding creative solutions to make things
+      work. Max graduated from Boston University in 2008 with a BA in
+      Economics. He has worked many jobs, most recently in the PSU IT
+      department as well as for a small web startup.</p>
+</div>
+  </div>
+  <div class="partner">
+    <div class="signature"><h1>Josh Meyer</h1><span class="title">Research Developer</span></div>
+    <img class="portrait" src="images/josh.jpg" />
+    <div class="bio">
+      <p>Josh, known as JJ to most, has had a long time interest in music, technology, and
+      the arts. Having grown up in Iowa, JJ cured his boredom by exploring and searching 
+      for music whenever he had a chance. Recently, in between watching old Arnold 
+      Schwarzenegger movies and sifting through old records, JJ has been collecting
+      ideas to create a unique and simple system to discover and explore new music.</p>
+
+      <p>As the Research Developer at iQueueTV, JJ hopes to combine his interests
+      in technology, music, and the arts to deliver a better experience for iQueueTV
+      users. He hopes to help develop new and creative ways to deliver and recommend
+      music.</p>
+
+      <p>JJ graduated from The University of Iowa in 2011 with a degree in
+      Computer Science and a minor in Art (Intermedia/Video). He worked 
+      as a undergrad research assistant helping develop programming languages 
+      and tools his last year at Iowa. After graduation JJ worked as a software 
+      developer.</p>
+    </div>
+  </div>
+  <div class="partner">
+    <div class="signature"><h1>Brian Ledger</h1><span class="title">Executive Manager</span></div>
+    <img class="portrait" src="images/brian.jpg" />
+    <div class="bio">
+      <p>Brian has had an interest in music and the arts since
+      childhood, recalling piano lessons, drum-kits, and an ongoing
+      relationship with a rather broken electric guitar.  Tragically,
+      he found his fate bent more toward the patter of keyboards and the
+      curve of an ergonomic desk-chair.  Lately he has taken to making
+      playlists and collecting music videos from various blogs and websites.</p>
+
+      <p>Brian founded iQueueTV in 2011 to address his lifelong
+      dissatisfaction with music television and syndicated radio.  He
+      envisions a world in which people are empowered to broadcast and
+      express themselves clearly and without mediation.  In this way,
+      he sees to maintain a passion for the arts while still working
+      to the best of his ability.</p>
+
+      <p>Brian graduated from the Cornell University College of Engineering
+      in 2011 with a degree in Computer Science and a concentration in
+      Business.  Polyglot, Brian knows over a dozen programming
+      languages, including Java, Haskell, Ruby, and Python, and has
+      roughly two-years direct experience in product development with
+      startups, ranging in size from 4 to over 250 employees. </p>
+    </div>
+  </div>
+  </div>
+  <div class="panel" id="vision">
+    <h1>Television is Evolving</h1>
+    <p>Network Ossification is a term used to describe the inability of
+    existing media systems to adapt to market shifts and technologies.
+    The term is made in reference to a biological process wherein pliable
+    cells become bonelike, hard and brittle.</p>
+
+    <p>Nowhere is ossification more evident then in the current state
+    of broadcast television.  Progressive pricing schemes, in which
+    consumers must pay exorbitant premiums for high quality content
+    providers such as HBO and Starz, are the norm, and have remained
+    relatively unchanged since the nineties.  Consumers often cite
+    the rising cost of cable television as a chief indicator of
+    inflation.  That is, they feel they are paying more each year for
+    the same value of service.</p>
+
+    <p>As unfortunate as the cable television provider's refusal to
+    add new service and increase value to it's consumers is, broadcast
+    television remains a multi-billion dollar industry.  In 2010,
+    gross revenue generated from basic and premium cable television
+    subscriptions exceeded 93 billion dollars, up from 89 billion in
+    2009 (US Census Data).  The number of televisions per household
+    increases yearly, as a majority of consumers continue to pay
+    premium prices for television services.</p>
+
+    <p>However, alternatives have emerged.  As internet networking
+    technology matures, media companies are seeing bitrates sufficient
+    for the transmission of high-quality digital video streams.
+    Internet media companies, such as Netflix and Hulu that provide
+    On-Demand video streaming, give users granular control of what
+    they watch and when, for prices more than competitive with the
+    traditional models.  Further, new hardware devices and set-top
+    boxes allow consumers to view these internet streams via
+    television, placing these companies in direct competition with
+    their older broadcast counterparts.</p>
+
+    <p>iQueueTV takes advantage of these trends in consumer behavior
+    by developing new web-applications and delivery mediums for
+    high-quality video content.  While focussing on the niche of music
+    video consumption, our technological capability remains adaptable
+    to the variety of new ideas which are shaping this revolution in
+    television.</p>
+
+    <img src="images/nielsen-streaming.png" />
+    
+    <h1>Technology is Emerging</h1>
+    <p>With this radical shift in architecture, from circuit-switched
+    cable-television to best-effort internet networks, comes a host of
+    unforeseen technical problems.  Providers can no longer ensure
+    broadcast quality via bandwidth reservations, but must instead
+    utilize complex Content Distribution Networks to localize data
+    around their audience.  Even with such complex CDN solutions as Akamai
+    and Amazon Cloudfront, problems such as under-buffering, jitter,
+    desynchronization, and transmission failure continue to frustrate
+    users, who are only used to the nuanced failures of cable
+    television (things such as network outages and radio static).</p> 
+
+    <p>Technologists approach these new problems with a variety of
+    solutions.  For instance, adaptive streaming is used in situations
+    of low-bandwidth, wherein the server acknowledges by transmitting
+    a lower-quality video at a reduced bitrate.  Technologies such as
+    Real-Time Streaming Protocol allow Just-In-Time delivery of
+    content in exchange for an optimally small bitrate.  As well, many
+    optimizations are being investigated for mobile and wireless
+    transmissions.</p>
+
+    <p>Another problem with internet streaming is the lack of
+    cross-platform standards.  Apple, Adobe, Google, and even recently
+    Netflix, are currently engaged in an ongoing battle to define
+    future HTML5 and MP4 standards, in an effort to gain market share
+    for their industrial broadcast solutions.  Adobe has even recently
+    entered an agreement with Amazon CloudFront, wherein their Media
+    Server technology has been made the one and primary streaming
+    solution for Amazon's CDN.
+
+    <p>These problems demand a keen insight into Media Networking, and
+    iQueueTV is poised to work at these frontiers.  Active
+    programmatic developments in streaming clients, servers, and
+    web-applications keep us up-to-date with new developments, and
+    position us to branch out and quickly leverage new opportunities
+    and technological advantages.
+
+    <h1>Markets are Shifting</h1>
+    <p>To consumer brands such as Nike, Converse, Levi's, and Coca Cola,
+    the most valuable markets are consumers aged 18-34 with high
+    levels of disposable income.  These are the people most likely to
+    follow aspirational and consumptive buying patterns, and who drive
+    a large part of sales revenue in these companies.</p>
+
+    <p>As evidenced in the graphs above, this cluster is leading the
+    shift from cable-television services to network-enabled streaming
+    video.  Intuitively this makes sense, as affluent consumers are
+    more likely to be early-adopters and tastemakers for the larger
+    population.</p>
+
+    <p>Research also shows that high-quality consumers and tastemakers
+    are more likely to react negatively to banner advertising and tend
+    to distrust mediums in which banner advertising is employed.
+    Instead, such consumer clusters can be reached through "trusted"
+    mediums, such as blogs and social networks.</p>
+
+    <p>iQueueTV positions the Music Video as a third kind of trusted
+    medium, one whose viral potential lies in consumer's realization
+    of culture and fashion as defined by artists and videographers.
+    iQueueTV promotes collaborative work between brands, producers,
+    curators, and distributers, to increase market exposure through
+    music videos.</p>
+
+    <h1>iQueueTV</h1>
+    <p>iQueueTV is a small firm of programmers and planners who employ
+    novel and existing infrastructure in the development of new
+    revenue.  We work with IP lawyers to certify development of new
+    patents and technologies.  As well, we investigate new techniques
+    in the field of Computer Science and new strategies in the
+    Economic Domain to find opportunities for increased efficiency,
+    strategic deployments, and new campaigns for marketing and video
+    distribution.</p>
+
+    <p>iQueueTV operates at the junctures of marketing, entertainment,
+    and technology, where on a client-to-client basis we develop
+    comprehensive strategies for production, marketing, distribution,
+    and analytics on media products and campaigns.  Because we are a
+    small firm, we place a premium on personal integrity, efficiency,
+    and autonomy.  Each individual has a vested interest in our growth
+    and works independently and cooperatively for the success of the
+    business.</p>
+  </div>
+  <div class="panel" id="contact">
+    Phone: (631) 413-5403<br />
+    E-Mail: <a href="mailto:brian.peter.ledger@gmail.com">brian.peter.ledger@gmail.com</a><br /><br />
+    Contact us regarding opportunities for:<br />
+    <ul>
+      <li> Strategic Partnerships
+      <li> Pre-Release Promotions
+      <li> Music Video Distribution
+      <li> Capital Investment
+      <li> Distribution Problems
+      <li> Product Licensing Agreements
+      <li> Job Inquiries
+    </ul>
+  </div>
+</div>
+</body>
+</html>

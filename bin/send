@@ -1,0 +1,16 @@
+#!/usr/local/bin/python
+
+import zmq
+from sys import argv
+
+type = argv[1]
+direction = argv[2]
+address = argv[3]
+message = " ".join(argv[4:])
+
+context = zmq.Context()
+mailer = context.socket (eval ("zmq."+type))
+
+eval ("mailer."+direction+" ('"+address+"')")
+
+mailer.send(message)
