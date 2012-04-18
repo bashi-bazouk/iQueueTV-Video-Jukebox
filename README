@@ -1,0 +1,117 @@
+FOLDERS
+
+bin:
+
+/home/application/bin is on the path.  Scripts in bin are runnable from any location, so should either use absolute paths or cd into a folder before execution.
+
+Scripts in the bin folder should be camel-cased.
+
+Finalized handlers should be placed in the bin folder before procerizing.
+
+
+--
+iqueue.tv:
+
+iqueue.tv is the flat folder space of http://iqueue.tv
+
+
+--
+lib:
+
+/home/application/lib is on the python path.  Shared libraries should be placed in the lib folder.
+
+
+--
+src:
+
+work in progress, raw and intermediate code, should be placed in the src folder.
+
+
+--
+templates:
+
+html templates can be created as python template strings.  For more information, see docs.python.or/release/2.5.2/lib/node40.html
+
+
+
+
+USEFUL SCRIPTS
+
+
+interpolate:
+
+Usage: interpolate $file
+
+interpolate takes a python template file as an argument and replaces any variables with their mappings from the environment.  Variables without a corresponding environment variable are not replaced.
+
+
+--
+finalize:
+
+Usage: finalize $file
+
+finalize is the same as interpolate, except that it will throw an exception if all variables are not replaced.
+
+
+--
+procerize:
+
+Usage: procerize $script
+
+procerize will install a script in the procer file hierarchy.  The script will be initialized the next time procer is started.
+
+
+--
+unprocerize:
+
+Usage: unprocerize $script
+
+unprocerize uninstalls a script from the procer file hierarchy and kills the process.
+
+
+--
+recv:
+
+Usage: recv (PULL | SUB) (BIND | CONNECT) $address
+
+recv receives a single zmq message from an address and prints it to stdout
+
+
+--
+monitor:
+
+Usage: watch (PULL | SUB) (BIND | CONNECT) $address
+
+watch loops, receiving all zmq messages from a particular address and printing them to stdout.
+
+
+--
+send:
+
+Usage: send (PUSH | PUB) (BIND | CONNECT) $address $message [$more]?
+
+send takes a message from the command line and delivers it to the given address as a zmq message.
+
+
+--
+talk:
+
+Usage talk (PUSH | PUB) (BIND | CONNECT) $address
+
+talk takes newline-separated messages from stdin and delivers them to the given address as zmq messages.
+
+
+--
+answeringMachine:
+
+Usage: answeringMachine $reqAddr $resAddr $file
+
+answeringMachine acts as a simple Mongrel2 handler, serving a static response file and printing all requests to stdout.
+
+
+--
+editPlayer
+
+Usage: editPlayer
+
+editPlayer opens src/coffeescript/player.coffee in emacs.  On close, it recompiles the player and injects it back into the homepage.
